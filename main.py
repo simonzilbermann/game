@@ -1,6 +1,7 @@
 import pygame
 import  math
 from game import Game
+
 pygame.init()
 
 #definir unr clock
@@ -26,6 +27,7 @@ play_button = pygame.transform.scale(play_button,(400,150))
 play_button_rect = play_button.get_rect()#recupere le placement du button
 play_button_rect.x = math.ceil(screen.get_width()/3.33)#larjeure de l ecran
 play_button_rect.y = math.ceil(screen.get_height()/2)
+
 
 #charger le jeu
 game = Game()

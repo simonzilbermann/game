@@ -42,6 +42,7 @@ class Game:
     def game_over(self):
         #remettre le jeu a neuf retirer les monster,remettre le joueur a 100 de vie, jeu en attente
         self.all_monsters = pygame.sprite.Group()#group son monster
+        self.score_max()
         self.comet_event.all_comets = pygame.sprite.Group() #maitre a 0
         self.player.health = self.player.max_health
         self.comet_event.reset_percent() #maitre a 0 la jauge
@@ -50,11 +51,18 @@ class Game:
         self.sound_manager.play('game_over')
 
 
+
     def update(self,screen):#le jeu
         #afficher le score sur screen
 
         score_text = self.font.render(f"Score : {self.score}",1,(0,0,0))
         screen.blit(score_text,(20,20))
+
+        with open("score", "r") as f:
+            Line = f.readlines()
+            first_line = Line[0].strip()
+            score_text_max = self.font.render(f" Max Score : {first_line}",1,(0,0,0))
+            screen.blit(score_text_max, (800, 20))
 
         # appliquer l image de joueur
         screen.blit(self.player.image, self.player.rect)
@@ -105,3 +113,15 @@ class Game:
     def spawn_monster(self,monster_class_name):
         monster = Mummy(self)
         self.all_monsters.add(monster_class_name.__call__(self))
+
+    def score_max(self):
+        with open("score", "r") as f:
+            Line = f.readlines()
+            if self.score > int(Line[0]):
+                with open("score", "w") as f:
+                    f.write(f"{self.score}\n")
+
+
+
+
+
